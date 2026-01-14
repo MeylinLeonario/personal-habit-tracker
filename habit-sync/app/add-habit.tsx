@@ -1,33 +1,22 @@
 import { View, Text, TextInput, StyleSheet, Pressable, Alert } from "react-native";
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import { Habit } from "../models/Habit";
-import { loadHabits, saveHabits } from "../storage/habitStorage";
-
-const newId = () => `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+import { useHabits } from "../storage/habitsProvider";
 
 export default function AddHabitScreen() {
   const router = useRouter();
   const [title, setTitle] = useState("");
 
-  const onSave = async () => {
+  const { addHabit } = useHabits();
+
+  const onSave = () => {
     const clean = title.trim();
     if (!clean) {
       Alert.alert("Oops", "Escribe un nombre para el hábito.");
       return;
     }
 
-    const newHabit: Habit = {
-      id: newId(),
-      title: clean,
-      createdAt: Date.now(),
-      completedDates: [],
-    };
-
-    const current = await loadHabits();
-    const next = [newHabit, ...current];
-    await saveHabits(next);
-
+    addHabit(clean, "daily"); // ✅ store maneja id, createdAt, etc.
     router.back();
   };
 

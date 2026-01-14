@@ -1,6 +1,10 @@
-export interface Habit {
+export type HabitFrequency = "daily" | "weekly";
+
+export type Habit = {
   id: string;
   title: string;
-  createdAt: number;
-  completedDates: string[]; // "YYYY-MM-DD"
-}
+  frequency: HabitFrequency;
+  completedDates: string[]; // YYYY-MM-DD local
+  createdAt: string; // ISO
+  archived?: boolean;
+};
