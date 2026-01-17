@@ -7,4 +7,7 @@ export type Habit = {
   completedDates: string[]; // YYYY-MM-DD local
   createdAt: string; // ISO
   archived?: boolean;
+
+  daysOfWeek?: number[];
+
 };
